@@ -53,13 +53,7 @@
         256
       ],
       "id": "3c3c238f-7812-4b49-8330-d1092b23f97b",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "USE_API_HERE",
-          "name": "USE_API_HERE"
-        }
-      }
+      "name": "OpenAI Chat Model"
     },
     {
       "parameters": {
@@ -112,13 +106,7 @@
         384
       ],
       "id": "017c8118-eaea-44c4-a65c-fc2c2545d1b0",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "USE_API_HERE",
-          "name": "USE_API_HERE"
-        }
-      }
+      "name": "OpenAI Chat Model1"
     },
     {
       "parameters": {
@@ -166,13 +154,7 @@
         48
       ],
       "id": "88358213-0ba4-429f-bee9-46e9ddc5bf71",
-      "name": "Get business inforamtion",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "USE_API_HERE",
-          "name": "USE_API_HERE"
-        }
-      }
+      "name": "Get business inforamtion"
     },
     {
       "parameters": {
@@ -277,13 +259,7 @@
         48
       ],
       "id": "805864b5-6ce0-4691-8940-8c3f7e36e27f",
-      "name": "Store all blog topics",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "USE_API_HERE",
-          "name": "USE_API_HERE"
-        }
-      }
+      "name": "Store all blog topics"
     },
     {
       "parameters": {
