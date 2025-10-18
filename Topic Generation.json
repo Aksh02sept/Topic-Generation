@@ -53,13 +53,7 @@
         256
       ],
       "id": "3c3c238f-7812-4b49-8330-d1092b23f97b",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "mC7Y1kmclUcjLgA7",
-          "name": "OpenAi account"
-        }
-      }
+      "name": "OpenAI Chat Model"
     },
     {
       "parameters": {
@@ -112,13 +106,7 @@
         384
       ],
       "id": "017c8118-eaea-44c4-a65c-fc2c2545d1b0",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "mC7Y1kmclUcjLgA7",
-          "name": "OpenAi account"
-        }
-      }
+      "name": "OpenAI Chat Model1"
     },
     {
       "parameters": {
@@ -139,7 +127,7 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/1HHAmQBqe1LfccgKxYg7As3hTlKhFd2VRxa1WUnUbLio/edit?gid=871171643#gid=871171643",
+          "value": "YOUR_SPREADSHEET_URL_HERE",
           "mode": "url"
         },
         "sheetName": {
@@ -147,7 +135,7 @@
           "value": 871171643,
           "mode": "list",
           "cachedResultName": "Project Details For Automations",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HHAmQBqe1LfccgKxYg7As3hTlKhFd2VRxa1WUnUbLio/edit#gid=871171643"
+          "cachedResultUrl": "YOUR_SPREADSHEET_URL_HERE"
         },
         "filtersUI": {
           "values": [
@@ -166,20 +154,14 @@
         48
       ],
       "id": "88358213-0ba4-429f-bee9-46e9ddc5bf71",
-      "name": "Get business inforamtion",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "MTRJsoTSWFo6qjj1",
-          "name": "Google Sheets account"
-        }
-      }
+      "name": "Get business inforamtion"
     },
     {
       "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/1X9DrZqTSM_qj0nErDqwjodBMQzuUzr1bGaHNagG06DU/edit?gid=642555163#gid=642555163",
+          "value": "YOUR_SPREADSHEET_URL_HERE",
           "mode": "url"
         },
         "sheetName": {
@@ -187,7 +169,7 @@
           "value": 642555163,
           "mode": "list",
           "cachedResultName": "Topic Generation & Content Creation",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X9DrZqTSM_qj0nErDqwjodBMQzuUzr1bGaHNagG06DU/edit#gid=642555163"
+          "cachedResultUrl": "YOUR_SPREADSHEET_URL_HERE"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -277,13 +259,7 @@
         48
       ],
       "id": "805864b5-6ce0-4691-8940-8c3f7e36e27f",
-      "name": "Store all blog topics",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "MTRJsoTSWFo6qjj1",
-          "name": "Google Sheets account"
-        }
-      }
+      "name": "Store all blog topics"
     },
     {
       "parameters": {
@@ -425,7 +401,7 @@
   "versionId": "f944f4f7-ce68-4869-b6ae-876c4253817c",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "d74474020fbd4bcbbac6ed7b72cf16ec09615cb267aaedcb23a43b65851c5113"
+    "instanceId": "REMOVED_INSTANCE_ID"
   },
   "id": "ATnVmAfJ6N0tM4Hz",
   "tags": []
