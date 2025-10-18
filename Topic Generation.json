@@ -1,0 +1,432 @@
+{
+  "name": "Topic Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=##Base Keywords:\n{{ $json['Base Keywords of This Project Which We Can Use For Identifying More Keywords For This Campaign'] }}\n\n#Business Information:\n{{ $json['Information about the Business (products & Services they offer)'] }}\n\n#Target Audience:\n{{ $json['Target Audience'] }}\n\n#Website Homepage Scrapped Content:\n{{ $json['Scraped HomePage Content'] }}\n\n#Competitor 1 website content.\n{{ $json[\"Scraped HomePage HTML (Competitor #1)\"].split(/\\s+/).slice(0, 150).join(\" \") }}\n\n#Competitor 2 website content.\n{{ $json[\"Scraped HomePage HTML (Competitor #2)\"].split(/\\s+/).slice(0, 150).join(\" \") }}\n\n#Competitor 2 website content.\n{{ $json[\"Scraped HomePage HTML (Competitor #3)\"].split(/\\s+/).slice(0, 150).join(\" \") }}\n",
+        "options": {
+          "systemMessage": "=Act like a professional content strategist specializing in Google Search 2024-2025 content trends.\n\nI will give you a keywords. Based on that keyword, first identify its most likely industry or niche.\nThen generate blog post title ideas that are:\n\n- Catchy and relevant to the topic's industry\n- Aligned with current content trends and search behaviors without including specific years or dates\n- Between 8-12 words (under 60 characters for optimal sharing)\n- Written in sentence case\n- Mix of formats: how-to guides, lists, questions, trends, and case studies\n- Include power words that drive engagement\nEnsure the final list sounds contextual and specific to the topic's industry with modern appeal. Do not include years (2024, 2025, etc.) or specific dates in the titles.\n\n---------------------\n#Competitor Research:\nAnalyze content strategies and trending topics from competitor websites content.\n\nUse insights from competitor analysis to ensure the generated titles are competitive and fill content gaps in the market while maintaining originality.\n\n#Special Instructions (Mandatory to Follow):\nWords not to use:- ensures, ensures compliance, prevents risks. Instead use, enables, enables governance oversight, mitigates risks.\n\n\n##Output format:\n- Return blog topics QYT 30+.\n- Return only the final blog titles in a numbered list.\ndo not include intro or supporting text.\n\n\n-----------"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        272,
+        48
+      ],
+      "id": "b713dc7c-d205-4305-80fb-212dfc62baaa",
+      "name": "Blog Title Generator"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert blog strategist and content editor with deep knowledge of content marketing trends and SEO best practices.\n\nYou will receive a list of blog post titles. Your job is to analyze, refine, and improve that list to create the most effective content strategy for the client.\n\n**Analysis & Improvement Instructions:**\n\n**Step 1: Quality Assessment**\n- Analyze the list of blog titles: \n{{ $json.output }}\n\n- Identify weak, generic, or repetitive titles that need improvement\n- Check for optimal length (under 60 characters for social sharing)\n- Evaluate SEO potential and search intent alignment\n\n**Step 2: Content Strategy Optimization**\n- Ensure variety in content types: educational, trending, practical, strategic, case studies\n- Balance evergreen value with current market relevance\n- Prioritize titles with strong engagement factors (power words, curiosity gaps, clear benefits)\n- Verify industry-specific language and context accuracy\n\n**Step 3: Improvements & Refinements**\n- **If titles need improvement:** Rewrite weak titles to be more compelling and specific\n- **Enhance SEO potential:** Optimize for target keywords while maintaining readability\n- **Improve engagement:** Add power words, numbers, or benefit-driven language where appropriate\n- **Fix character count:** Ensure all titles are under 60 characters for optimal sharing\n\n**Step 4: Final Selection Criteria**\n- Choose titles that directly address target audience pain points\n- Prioritize actionable and benefit-focused headlines\n- Ensure each title offers unique value proposition\n- Maintain consistent quality and professional tone\n\n**Quality Standards:**\n- High search potential and click-through rate\n- Industry-specific and audience-relevant\n- Compelling and actionable language\n- Optimal length for social sharing\n- Unique value in each title\n\n#output format:\n- do nto include numbers like 1. topic1 2.topic2. just return actual topics.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        672,
+        48
+      ],
+      "id": "13a1fd72-d417-4a58-bd8a-5f01be32f4db",
+      "name": "QC - Blog Title"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {
+          "maxTokens": 30000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        272,
+        256
+      ],
+      "id": "3c3c238f-7812-4b49-8330-d1092b23f97b",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "mC7Y1kmclUcjLgA7",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        48
+      ],
+      "id": "1846bbc5-77d7-4882-80ac-a4aa214eff60",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"All Blog Topics\" : \"topic1, topic1, topic3.....\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        768,
+        272
+      ],
+      "id": "4486c959-08ed-49f5-8bf5-1ec1ce4e67da",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        672,
+        384
+      ],
+      "id": "017c8118-eaea-44c4-a65c-fc2c2545d1b0",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "mC7Y1kmclUcjLgA7",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "**runs weekly and generate 30+ blog topics per week using GPT4.1**",
+        "height": 80,
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "83becc70-920f-4419-a085-2da351d1b676",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HHAmQBqe1LfccgKxYg7As3hTlKhFd2VRxa1WUnUbLio/edit?gid=871171643#gid=871171643",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 871171643,
+          "mode": "list",
+          "cachedResultName": "Project Details For Automations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HHAmQBqe1LfccgKxYg7As3hTlKhFd2VRxa1WUnUbLio/edit#gid=871171643"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Website URL",
+              "lookupValue": "https://www.sybal.io/"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        32,
+        48
+      ],
+      "id": "88358213-0ba4-429f-bee9-46e9ddc5bf71",
+      "name": "Get business inforamtion",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MTRJsoTSWFo6qjj1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1X9DrZqTSM_qj0nErDqwjodBMQzuUzr1bGaHNagG06DU/edit?gid=642555163#gid=642555163",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 642555163,
+          "mode": "list",
+          "cachedResultName": "Topic Generation & Content Creation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1X9DrZqTSM_qj0nErDqwjodBMQzuUzr1bGaHNagG06DU/edit#gid=642555163"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now.format('yyyy-MM-dd') }}",
+            "Content Topic": "={{ $json.topic }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Content Topic",
+              "displayName": "Content Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Write Content",
+              "displayName": "Write Content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Content URL",
+              "displayName": "Content URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Image URL",
+              "displayName": "Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Publish Content",
+              "displayName": "Publish Content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Live URL",
+              "displayName": "Live URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1296,
+        48
+      ],
+      "id": "805864b5-6ce0-4691-8940-8c3f7e36e27f",
+      "name": "Store all blog topics",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MTRJsoTSWFo6qjj1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst blogs = items[0]?.json?.output[\"All Blog Topics\"].split(\"\\n\");\nconst blogItems = blogs.map((blog, index) => ({\n  json: { id: index, topic: blog },\n  pairedItem: index,\n}));\nreturn blogItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        48
+      ],
+      "id": "710a0e22-9422-400a-8342-f2b50acadcd8",
+      "name": "Split output all blog topics"
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "timestamp": "2025-10-05T06:00:59.007-04:00",
+          "Readable date": "October 5th 2025, 6:00:59 am",
+          "Readable time": "6:00:59 am",
+          "Day of week": "Sunday",
+          "Year": "2025",
+          "Month": "October",
+          "Day of month": "05",
+          "Hour": "06",
+          "Minute": "00",
+          "Second": "59",
+          "Timezone": "America/New_York (UTC-04:00)"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Blog Title Generator": {
+      "main": [
+        [
+          {
+            "node": "QC - Blog Title",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QC - Blog Title": {
+      "main": [
+        [
+          {
+            "node": "Split output all blog topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Blog Title Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "QC - Blog Title",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "QC - Blog Title",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get business inforamtion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get business inforamtion": {
+      "main": [
+        [
+          {
+            "node": "Blog Title Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store all blog topics": {
+      "main": [
+        []
+      ]
+    },
+    "Split output all blog topics": {
+      "main": [
+        [
+          {
+            "node": "Store all blog topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f944f4f7-ce68-4869-b6ae-876c4253817c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d74474020fbd4bcbbac6ed7b72cf16ec09615cb267aaedcb23a43b65851c5113"
+  },
+  "id": "ATnVmAfJ6N0tM4Hz",
+  "tags": []
+}
